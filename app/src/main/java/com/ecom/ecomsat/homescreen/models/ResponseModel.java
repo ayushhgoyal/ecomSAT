@@ -1,6 +1,6 @@
 package com.ecom.ecomsat.homescreen.models;
 
-import java.util.List;
+import io.realm.RealmList;
 
 /**
  * Created by ayushgoyal on 07/06/18.
@@ -9,22 +9,22 @@ import java.util.List;
 public class ResponseModel {
 
 
-    private List<CategoriesModel> categories;
-    private List<RankingsModel> rankings;
+    private RealmList<CategoriesModel> categories;
+    private RealmList<RankingsModel> rankings;
 
-    public List<CategoriesModel> getCategories() {
+    public RealmList<CategoriesModel> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<CategoriesModel> categories) {
+    public void setCategories(RealmList<CategoriesModel> categories) {
         this.categories = categories;
     }
 
-    public List<RankingsModel> getRankings() {
+    public RealmList<RankingsModel> getRankings() {
         return rankings;
     }
 
-    public void setRankings(List<RankingsModel> rankings) {
+    public void setRankings(RealmList<RankingsModel> rankings) {
         this.rankings = rankings;
     }
 

@@ -6,6 +6,8 @@ import com.ecom.ecomsat.common.di.ApiComponent;
 import com.ecom.ecomsat.common.di.ApiModule;
 import com.ecom.ecomsat.common.di.DaggerApiComponent;
 
+import io.realm.Realm;
+
 /**
  * Created by ayushgoyal on 08/06/18.
  */
@@ -22,8 +24,17 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        initDagger();
+        initRealm();
+
+    }
+
+    private void initRealm() {
+        Realm.init(this);
+    }
+
+    private void initDagger() {
         daggerApiComponent = DaggerApiComponent.builder()
                 .apiModule(new ApiModule()).build();
-
     }
 }

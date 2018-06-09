@@ -1,6 +1,8 @@
 package com.ecom.ecomsat.homescreen.models;
 
-public class VariantsModel {
+import io.realm.RealmObject;
+
+public class VariantsModel extends RealmObject {
     /**
      * id : 1
      * color : Blue

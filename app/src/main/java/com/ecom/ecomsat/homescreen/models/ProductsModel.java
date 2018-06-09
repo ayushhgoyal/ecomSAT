@@ -1,8 +1,10 @@
 package com.ecom.ecomsat.homescreen.models;
 
-import java.util.List;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-public class ProductsModel {
+public class ProductsModel extends RealmObject {
     /**
      * id : 1
      * name : Nike Sneakers
@@ -10,12 +12,12 @@ public class ProductsModel {
      * variants : [{"id":1,"color":"Blue","size":42,"price":1000},{"id":2,"color":"Red","size":42,"price":1000},{"id":3,"color":"Blue","size":44,"price":1200},{"id":4,"color":"Red","size":44,"price":1200}]
      * tax : {"name":"VAT","value":12.5}
      */
-
+    @PrimaryKey
     private int id;
     private String name;
     private String date_added;
     private TaxModel tax;
-    private List<VariantsModel> variants;
+    private RealmList<VariantsModel> variants;
 
     public int getId() {
         return id;
@@ -49,11 +51,11 @@ public class ProductsModel {
         this.tax = tax;
     }
 
-    public List<VariantsModel> getVariants() {
+    public RealmList<VariantsModel> getVariants() {
         return variants;
     }
 
-    public void setVariants(List<VariantsModel> variants) {
+    public void setVariants(RealmList<VariantsModel> variants) {
         this.variants = variants;
     }
 }

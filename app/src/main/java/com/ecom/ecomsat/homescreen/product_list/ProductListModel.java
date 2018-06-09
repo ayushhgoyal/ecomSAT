@@ -1,10 +1,14 @@
 package com.ecom.ecomsat.homescreen.product_list;
 
+import android.util.Log;
+
 import com.ecom.ecomsat.common.MyApplication;
+import com.ecom.ecomsat.homescreen.models.CategoriesModel;
 import com.ecom.ecomsat.homescreen.models.ResponseModel;
 
 import javax.inject.Inject;
 
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,6 +21,8 @@ public class ProductListModel implements ProductListMVP.IProductListModel {
 
 
     private MyApplication myApplication;
+    Realm realm = Realm.getDefaultInstance();
+
 
     @Inject
     Call<ResponseModel> productListCall;
@@ -32,8 +38,14 @@ public class ProductListModel implements ProductListMVP.IProductListModel {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 ResponseModel responseModel = response.body();
-                responseModel.getCategories();
-                
+//                responseModel.getCategories();
+
+                realm.copyToRealm(responseModel.getCategories());
+                realm.copyToRealm(responseModel.getRankings());
+
+                Log.d("ProductListModel",
+                        "realm.where(CategoriesModel.class).findAll():"
+                                + realm.where(CategoriesModel.class).findAll().size());
             }
 
             @Override

@@ -2,7 +2,10 @@ package com.ecom.ecomsat.homescreen.models;
 
 import java.util.List;
 
-public class CategoriesModel {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
+public class CategoriesModel extends RealmObject {
     /**
      * id : 1
      * name :  Casuals
@@ -12,8 +15,8 @@ public class CategoriesModel {
 
     private int id;
     private String name;
-    private List<ProductsModel> products;
-    private List<?> child_categories;
+    private RealmList<ProductsModel> products;
+    private RealmList<Integer> child_categories;
 
     public int getId() {
         return id;
@@ -35,15 +38,16 @@ public class CategoriesModel {
         return products;
     }
 
-    public void setProducts(List<ProductsModel> products) {
+    public void setProducts(RealmList<ProductsModel> products) {
         this.products = products;
     }
 
-    public List<?> getChild_categories() {
+
+    public List<Integer> getChild_categories() {
         return child_categories;
     }
 
-    public void setChild_categories(List<?> child_categories) {
+    public void setChild_categories(RealmList<Integer> child_categories) {
         this.child_categories = child_categories;
     }
 }

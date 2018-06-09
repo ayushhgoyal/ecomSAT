@@ -1,6 +1,8 @@
 package com.ecom.ecomsat.homescreen.models;
 
-public class RankedProductModel {
+import io.realm.RealmObject;
+
+public class RankedProductModel extends RealmObject {
     /**
      * id : 1
      * view_count : 56700

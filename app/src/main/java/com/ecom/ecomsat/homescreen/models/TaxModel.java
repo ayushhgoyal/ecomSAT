@@ -1,6 +1,8 @@
 package com.ecom.ecomsat.homescreen.models;
 
-public class TaxModel {
+import io.realm.RealmObject;
+
+public class TaxModel extends RealmObject {
     /**
      * name : VAT
      * value : 12.5
