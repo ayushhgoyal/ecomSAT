@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class CategoriesModel extends RealmObject {
     /**
@@ -13,6 +14,7 @@ public class CategoriesModel extends RealmObject {
      * child_categories : []
      */
 
+    @PrimaryKey
     private int id;
     private String name;
     private RealmList<ProductsModel> products;

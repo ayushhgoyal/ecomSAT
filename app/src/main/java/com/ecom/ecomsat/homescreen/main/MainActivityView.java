@@ -1,12 +1,12 @@
 package com.ecom.ecomsat.homescreen.main;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.ecom.ecomsat.R;
 import com.ecom.ecomsat.homescreen.product_list.ProductListFragmentView;
 
-public class MainActivityView extends AppCompatActivity implements MainActivityMVP.IMainActivityView {
+public class MainActivityView extends Activity implements MainActivityMVP.IMainActivityView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,7 @@ public class MainActivityView extends AppCompatActivity implements MainActivityM
     }
 
     private void loadProductListFragment() {
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, new ProductListFragmentView()).commit();
 
     }
@@ -47,5 +47,10 @@ public class MainActivityView extends AppCompatActivity implements MainActivityM
     @Override
     public void showErrorMessage(String message) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

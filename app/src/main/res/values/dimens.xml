@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="card_view_margin_normal">4dp</dimen>
+    <dimen name="card_view_padding_normal">8dp</dimen>
+    <dimen name="card_view_corner_radius_normal">4dp</dimen>
+    <dimen name="card_view_elevation_normal">8dp</dimen>
+
+
+    <dimen name="text_normal">16sp</dimen>
+    <dimen name="text_large">20sp</dimen>
+
+</resources>
