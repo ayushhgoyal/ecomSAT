@@ -33,4 +33,12 @@ public class ProductDetailModel implements ProductDetailMVP.IProductDetailModel 
 
         return colors;
     }
+
+    @Override
+    public VariantsModel getProductVariant(ProductsModel product, Integer selectedSize, String color) {
+        VariantsModel variantsModels = product.getVariants().where().equalTo("size", selectedSize)
+                .and()
+                .equalTo("color", color).findFirst();
+        return variantsModels;
+    }
 }

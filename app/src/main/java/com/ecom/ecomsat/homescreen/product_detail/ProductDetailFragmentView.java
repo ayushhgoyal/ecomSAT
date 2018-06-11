@@ -125,6 +125,7 @@ public class ProductDetailFragmentView extends Fragment implements ProductDetail
     private void setProductDetails() {
         tvProductName.setText(getProductsModel().getName());
         tvDateAdded.setText("Added on: " + getProductsModel().getDate_added());
+        labelTax.setText("Tax (" + getProductsModel().getTax().getName() + "):");
 
         initColorAdapter();
         initSizeAdapter();
@@ -170,5 +171,21 @@ public class ProductDetailFragmentView extends Fragment implements ProductDetail
     public void setColorsAdapter(ArrayList<String> colorList) {
         colorAdapter = new ColorAdapter(this, colorList);
         rvColor.setAdapter(colorAdapter);
+
+        // consider first color clicked
+        onColorClicked(0);
+    }
+
+    @Override
+    public void onColorClicked(int adapterPosition) {
+        colorAdapter.setSelected(adapterPosition);
+        productDetailPresenter.onColorSelected(adapterPosition);
+    }
+
+    @Override
+    public void setAmounts(int price, double tax, double total_amount) {
+        tvPrice.setText(price + "");
+        tvTax.setText(tax + "");
+        tvTotalAmount.setText(total_amount + "");
     }
 }

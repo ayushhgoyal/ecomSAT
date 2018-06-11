@@ -1,5 +1,6 @@
 package com.ecom.ecomsat.homescreen.product_detail.adapters;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
 
     private final ProductDetailFragmentView productDetailFragmentView;
     private ArrayList<String> colorList;
+    private int selectedPosition = -1;
 
     public ColorAdapter(ProductDetailFragmentView productDetailFragmentView, ArrayList<String> colorList) {
         this.productDetailFragmentView = productDetailFragmentView;
@@ -37,11 +39,26 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.tvProperty.setText(colorList.get(position));
+        holder.tvProperty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productDetailFragmentView.onColorClicked(holder.getAdapterPosition());
+            }
+        });
+
+        // highlight selected item
+        holder.tvProperty.setTextColor(position == selectedPosition ? Color.RED : Color.GRAY);
+
     }
 
     @Override
     public int getItemCount() {
         return colorList.size();
+    }
+
+    public void setSelected(int adapterPosition) {
+        selectedPosition = adapterPosition;
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
