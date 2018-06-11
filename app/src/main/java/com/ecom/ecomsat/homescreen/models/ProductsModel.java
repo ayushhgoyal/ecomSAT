@@ -2,6 +2,7 @@ package com.ecom.ecomsat.homescreen.models;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class ProductsModel extends RealmObject {
@@ -18,6 +19,17 @@ public class ProductsModel extends RealmObject {
     private String date_added;
     private TaxModel tax;
     private RealmList<VariantsModel> variants;
+
+    @Ignore
+    String count = "";
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
 
     public int getId() {
         return id;

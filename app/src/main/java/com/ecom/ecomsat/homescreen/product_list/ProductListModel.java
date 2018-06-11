@@ -5,14 +5,20 @@ import android.util.Log;
 import com.ecom.ecomsat.common.MyApplication;
 import com.ecom.ecomsat.homescreen.models.CategoriesModel;
 import com.ecom.ecomsat.homescreen.models.ProductsModel;
+import com.ecom.ecomsat.homescreen.models.RankedProductModel;
+import com.ecom.ecomsat.homescreen.models.RankingsModel;
 import com.ecom.ecomsat.homescreen.models.ResponseModel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -85,6 +91,90 @@ public class ProductListModel implements ProductListMVP.IProductListModel {
 
     @Override
     public void onRemoteProductsReceived() {
+
+    }
+
+
+    @Override
+    public ArrayList<String> getRankings() {
+        RealmResults<RankingsModel> all = realm.where(RankingsModel.class).distinct("ranking").findAll();
+        ArrayList<String> strings = new ArrayList<>();
+        for (RankingsModel rankingsModel :
+                all) {
+            strings.add(rankingsModel.getRanking());
+        }
+        return strings;
+    }
+
+    @Override
+    public HashSet<ProductsModel> getProductsForRank(String rank) {
+
+        // fetch product ids for this rank
+
+        RealmResults<RankedProductModel> products = realm
+                .where(RankingsModel.class)
+                .equalTo("ranking", rank)
+                .findFirst().getProducts().where()
+                .sort("shares", Sort.DESCENDING).findAll()
+                .where()
+                .sort("view_count", Sort.DESCENDING).findAll()
+                .where()
+                .sort("order_count", Sort.DESCENDING).findAll();
+
+        // these fields should not be hardcoded :(
+
+//        /**
+//         * get ids for these models
+//         * using linked hash set to maintain insertion order
+//         */
+//
+//        LinkedHashSet<Integer> product_ids = new LinkedHashSet<>();
+//
+//        for (RankedProductModel rankedProductModel :
+//                products) {
+//            product_ids.add(rankedProductModel.getId());
+//        }
+//
+//
+//        // get product models for these ids
+//
+//        Integer[] ids = product_ids.toArray(new Integer[product_ids.size()]);
+//
+//        /*************ERROR*************
+//         * following is NOT keeping the same order so we
+//         * need to get each product by ourselves
+//         *
+//         * This step and previous one can be skipped (Optional)
+//         */
+//        RealmResults<ProductsModel> productModels = realm.where(ProductsModel.class)
+//                .in("id",
+//                        ids).findAll();
+
+//        querying on returned results only
+
+        RealmResults<ProductsModel> realmResults = realm.where(ProductsModel.class).findAll();
+
+        LinkedHashSet<ProductsModel> productsModelHashSet = new LinkedHashSet<>();
+        for (RankedProductModel rankedProductModel :
+                products) {
+            ProductsModel productsModel = realmResults.where()
+                    .equalTo("id", rankedProductModel.getId()).findFirst();
+
+            // set count as well
+            // since only one count will have valid value and other as 0
+            // so its safe to add them
+            // in order to generalize this method
+
+            productsModel.setCount("Count: " + (rankedProductModel.getOrder_count()
+                    + rankedProductModel.getShares() + rankedProductModel.getView_count()
+            ));
+
+
+            productsModelHashSet.add(productsModel);
+        }
+
+
+        return productsModelHashSet;
 
     }
 

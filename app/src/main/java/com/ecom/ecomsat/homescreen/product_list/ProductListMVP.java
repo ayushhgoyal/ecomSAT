@@ -4,6 +4,7 @@ import com.ecom.ecomsat.homescreen.models.CategoriesModel;
 import com.ecom.ecomsat.homescreen.models.ProductsModel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Created by ayushgoyal on 08/06/18.
@@ -35,6 +36,10 @@ public class ProductListMVP {
         void onCategorySelected(CategoriesModel id);
 
         void onProductClicked(int adapterPosition);
+
+        ArrayList<String> getRankings();
+
+        void getProductsForRank(String rank);
     }
 
     public interface IProductListModel {
@@ -43,5 +48,9 @@ public class ProductListMVP {
         public void onCachedProductsReceived();
 
         public void onRemoteProductsReceived();
+
+        ArrayList<String> getRankings();
+
+        HashSet<ProductsModel> getProductsForRank(String rank);
     }
 }

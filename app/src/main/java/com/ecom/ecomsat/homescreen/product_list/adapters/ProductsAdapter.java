@@ -47,6 +47,10 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         ProductsModel productsModel = data.get(position);
         holder.tvProductName.setText(productsModel.getName());
         holder.tvProductVariants.setText("Available variants: " + productsModel.getVariants().size());
+        holder.tvProductID.setText("Product ID: " + productsModel.getId());
+
+        // this will only be visible when displaying ranked products else it will be empty
+        holder.tv_rank_count.setText(productsModel.getCount());
 
         holder.cvProductContainer.setOnClickListener(new OnClickListener() {
             @Override
@@ -76,8 +80,14 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         TextView tvProductName;
         @BindView(R.id.tv_product_variants)
         TextView tvProductVariants;
+
+        @BindView(R.id.tv_product_id)
+        TextView tvProductID;
         @BindView(R.id.cv_product_container)
         CardView cvProductContainer;
+
+        @BindView(R.id.tv_rank_count)
+        TextView tv_rank_count;
 
         ViewHolder(View view) {
             super(view);

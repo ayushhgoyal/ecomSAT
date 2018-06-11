@@ -138,6 +138,36 @@ class ProductListPresenter implements ProductListMVP.IProductListPresenter {
         view.launchProductDetail(productsModel);
     }
 
+//    @Override
+//    public void loadMostViewed() {
+//        productListModel.getMostViewedProducts();
+//    }
+
+    @Override
+    public ArrayList<String> getRankings() {
+        ArrayList<String> rankings = productListModel.getRankings();
+        return rankings;
+    }
+
+    @Override
+    public void getProductsForRank(String rank) {
+        HashSet<ProductsModel> rankedProducts = productListModel.getProductsForRank(rank);
+
+        /**
+         *  now we will intersect fetched products for rank
+         *  and already loaded products
+         *  so that sorting will happen only in current selection of category
+         */
+
+        HashSet<ProductsModel> loadedProducts = new HashSet<>(getLoadedProductModels());
+
+//        loadedProducts.(rankedProducts);
+        rankedProducts.retainAll(loadedProducts);
+
+        view.refreshProductsAdapter(new ArrayList<>(rankedProducts), rank);
+
+    }
+
 
     public void resetCategories() {
         onCategoriesReceived();

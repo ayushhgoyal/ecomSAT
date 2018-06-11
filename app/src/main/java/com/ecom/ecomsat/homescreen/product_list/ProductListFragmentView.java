@@ -17,6 +17,8 @@ import com.ecom.ecomsat.homescreen.models.CategoriesModel;
 import com.ecom.ecomsat.homescreen.models.ProductsModel;
 import com.ecom.ecomsat.homescreen.product_list.adapters.CategoryAdapter;
 import com.ecom.ecomsat.homescreen.product_list.adapters.ProductsAdapter;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.ArrayList;
 
@@ -41,6 +43,16 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
     TextView tvCategoryName;
     @BindView(R.id.tv_current_category)
     TextView tvCurrentCategory;
+    @BindView(R.id.fab_sort)
+    FloatingActionsMenu fabSort;
+    //    @BindView(R.id.action_most_viewed)
+//    FloatingActionButton actionMostViewed;
+//    @BindView(R.id.action_most_shared)
+//    FloatingActionButton actionMostShared;
+//    @BindView(R.id.action_most_ordered)
+//    FloatingActionButton actionMostOrdered;
+//    @BindView(R.id.action_all)
+//    FloatingActionButton actionAll;
     private ProductListPresenter productListPresenter;
 
     IProductListInteractionListerner iProductListInteractionListerner;
@@ -66,10 +78,44 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
         initPresenter();
         initAdapters();
         goToParentClickListener();
+        initSortFab();
 
         productListPresenter.getProducts();
 
         return view;
+    }
+
+    private void initSortFab() {
+
+        ArrayList<String> rankings = productListPresenter.getRankings();
+
+        FloatingActionButton actionAllButton = new FloatingActionButton(getActivity());
+        actionAllButton.setTitle("Reset");
+        fabSort.addButton(actionAllButton);
+
+        actionAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabSort.collapse();
+                productListPresenter.resetCategories();
+            }
+        });
+
+        for (String rank :
+                rankings) {
+            FloatingActionButton floatingActionButton = new FloatingActionButton(getActivity());
+            floatingActionButton.setTitle(rank);
+            fabSort.addButton(floatingActionButton);
+
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fabSort.collapse();
+                    productListPresenter.getProductsForRank(rank);
+                }
+            });
+        }
+
     }
 
     private void goToParentClickListener() {
