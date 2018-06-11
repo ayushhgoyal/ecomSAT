@@ -27,6 +27,15 @@ public class MainActivityView extends Activity implements MainActivityMVP.IMainA
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() == 1) { // finish activity since last fragment
+            finish();
+        } else {
+            super.onBackPressed(); // pops immediate fragment
+        }
+    }
+
     /**
      * Displays loading view with general message
      */

@@ -108,13 +108,6 @@ public class ProductListModel implements ProductListMVP.IProductListModel {
         // then fetch all products for all these categories
         // and keep saving them in same arraylist - finally send it across to shine
 
-//        while (categoryModel.getChild_categories().size() > 0) {
-//            ArrayList<CategoriesModel> subCategoriesForCategory = getSubCategoriesForCategory(categoryModel.getId());
-//            for (CategoriesModel model :
-//                    subCategoriesForCategory) {
-//                productsModels.addAll(model.getProducts());
-//            }
-//        }
 
         if (!categoryModel.getChild_categories().isEmpty()) { // if child categories are present
             for (CategoriesModel model :

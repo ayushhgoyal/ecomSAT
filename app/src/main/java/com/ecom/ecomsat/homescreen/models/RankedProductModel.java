@@ -10,6 +10,25 @@ public class RankedProductModel extends RealmObject {
 
     private int id;
     private int view_count;
+    private int order_count;
+
+    public int getOrder_count() {
+        return order_count;
+    }
+
+    public void setOrder_count(int order_count) {
+        this.order_count = order_count;
+    }
+
+    public int getShares() {
+        return shares;
+    }
+
+    public void setShares(int shares) {
+        this.shares = shares;
+    }
+
+    private int shares;
 
     public int getId() {
         return id;

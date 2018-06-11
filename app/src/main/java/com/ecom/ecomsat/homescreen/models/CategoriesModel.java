@@ -36,7 +36,7 @@ public class CategoriesModel extends RealmObject {
         this.name = name;
     }
 
-    public List<ProductsModel> getProducts() {
+    public RealmList<ProductsModel> getProducts() {
         return products;
     }
 

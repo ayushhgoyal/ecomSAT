@@ -88,9 +88,6 @@ class ProductListPresenter implements ProductListMVP.IProductListPresenter {
 
         // fetch products for all parent categories
 
-
-//        Toast.makeText(view.getActivity(), "parent products to be fetched", Toast.LENGTH_SHORT).show();
-
         ArrayList<ProductsModel> productsForCategory = new ArrayList<>();
 
         for (CategoriesModel model :

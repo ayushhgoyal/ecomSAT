@@ -27,4 +27,10 @@ public class RankingsModel  extends RealmObject {
     public void setProducts(RealmList<RankedProductModel> products) {
         this.products = products;
     }
+
+
+
 }
+
+
+
