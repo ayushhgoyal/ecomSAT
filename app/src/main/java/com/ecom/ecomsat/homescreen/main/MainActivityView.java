@@ -4,9 +4,15 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.ecom.ecomsat.R;
+import com.ecom.ecomsat.homescreen.models.ProductsModel;
+import com.ecom.ecomsat.homescreen.product_detail.ProductDetailFragmentView;
+import com.ecom.ecomsat.homescreen.product_list.IProductListInteractionListerner;
 import com.ecom.ecomsat.homescreen.product_list.ProductListFragmentView;
 
-public class MainActivityView extends Activity implements MainActivityMVP.IMainActivityView {
+public class MainActivityView extends Activity implements MainActivityMVP.IMainActivityView,
+        IProductListInteractionListerner {
+
+    private ProductsModel product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +22,7 @@ public class MainActivityView extends Activity implements MainActivityMVP.IMainA
     }
 
     private void loadProductListFragment() {
-        getFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction().addToBackStack(null)
                 .add(R.id.fragment_container, new ProductListFragmentView()).commit();
 
     }
@@ -52,5 +58,20 @@ public class MainActivityView extends Activity implements MainActivityMVP.IMainA
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void launchProductDetail(ProductsModel product) {
+        this.product = product;
+//        ProductDetailFragmentView productDetailFragmentView =
+//                ProductDetailFragmentView.newInstance(product);
+        getFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.fragment_container,
+                        new ProductDetailFragmentView()).commit();
+    }
+
+    public ProductsModel getProduct() {
+        return product;
     }
 }

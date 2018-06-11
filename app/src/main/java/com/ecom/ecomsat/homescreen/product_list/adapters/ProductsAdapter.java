@@ -4,6 +4,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -19,6 +20,11 @@ import butterknife.ButterKnife;
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
 
     private ProductListFragmentView productListFragmentView;
+
+    public ArrayList<ProductsModel> getData() {
+        return data;
+    }
+
     ArrayList<ProductsModel> data;
 
     public ProductsAdapter(ProductListFragmentView productListFragmentView) {
@@ -41,6 +47,18 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         ProductsModel productsModel = data.get(position);
         holder.tvProductName.setText(productsModel.getName());
         holder.tvProductVariants.setText("Available variants: " + productsModel.getVariants().size());
+
+        holder.cvProductContainer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productListFragmentView.onProductListitemClick(holder.getAdapterPosition());
+            }
+        });
+
+    }
+
+    private void itemClickListener() {
+
     }
 
     @Override

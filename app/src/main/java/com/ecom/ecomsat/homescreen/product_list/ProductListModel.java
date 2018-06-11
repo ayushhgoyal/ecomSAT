@@ -26,8 +26,8 @@ public class ProductListModel implements ProductListMVP.IProductListModel {
 
     private MyApplication myApplication;
     private ProductListPresenter productListPresenter;
-    Realm realm = Realm.getDefaultInstance();
 
+    Realm realm = Realm.getDefaultInstance();
 
     @Inject
     Call<ResponseModel> productListCall;
@@ -98,7 +98,8 @@ public class ProductListModel implements ProductListMVP.IProductListModel {
 
         ArrayList<ProductsModel> productsModels = new ArrayList<>();
 
-        CategoriesModel categoryModel = realm.where(CategoriesModel.class).equalTo("id", id).findFirst();
+        CategoriesModel categoryModel = realm.where(CategoriesModel.class)
+                .equalTo("id", id).findFirst();
 
         // get all products for this passed category
         productsModels.addAll(categoryModel.getProducts());

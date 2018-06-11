@@ -36,5 +36,7 @@ public class MyApplication extends Application {
     private void initDagger() {
         daggerApiComponent = DaggerApiComponent.builder()
                 .apiModule(new ApiModule()).build();
+
+
     }
 }

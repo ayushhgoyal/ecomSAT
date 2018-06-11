@@ -21,6 +21,10 @@ public class ProductListMVP {
         void showGoToParentButton();
 
         void setSelectedCategory(CategoriesModel parentCategory);
+
+        void onProductListitemClick(int adapterPosition);
+
+        void launchProductDetail(ProductsModel product);
     }
 
     public interface IProductListPresenter {
@@ -29,6 +33,8 @@ public class ProductListMVP {
         void onCategoriesReceived();
 
         void onCategorySelected(CategoriesModel id);
+
+        void onProductClicked(int adapterPosition);
     }
 
     public interface IProductListModel {

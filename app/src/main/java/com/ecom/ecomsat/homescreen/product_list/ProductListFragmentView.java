@@ -1,6 +1,7 @@
 package com.ecom.ecomsat.homescreen.product_list;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -41,6 +42,8 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
     @BindView(R.id.tv_current_category)
     TextView tvCurrentCategory;
     private ProductListPresenter productListPresenter;
+
+    IProductListInteractionListerner iProductListInteractionListerner;
 
     private CategoryAdapter mCategoryAdapter;
     ProductsAdapter mProductsAdapter;
@@ -145,7 +148,28 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
         }
     }
 
+    @Override
+    public void onProductListitemClick(int adapterPosition) {
+        productListPresenter.onProductClicked(adapterPosition);
+    }
+
+    @Override
+    public void launchProductDetail(ProductsModel product) {
+        iProductListInteractionListerner.launchProductDetail(product);
+    }
+
     public void onCategoryClicked(CategoriesModel categoriesModel) {
         productListPresenter.onCategorySelected(categoriesModel);
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            iProductListInteractionListerner = (IProductListInteractionListerner) context;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.ecom.ecomsat.homescreen.product_list;
 import com.ecom.ecomsat.common.MyApplication;
 import com.ecom.ecomsat.homescreen.models.CategoriesModel;
 import com.ecom.ecomsat.homescreen.models.ProductsModel;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,11 +22,23 @@ class ProductListPresenter implements ProductListMVP.IProductListPresenter {
     MyApplication myApplication;
 
     Realm realm = Realm.getDefaultInstance();
+    Gson gson;
+
+    public ArrayList<ProductsModel> getLoadedProductModels() {
+        return loadedProductModels;
+    }
+
+    public void setLoadedProductModels(ArrayList<ProductsModel> loadedProductModels) {
+        this.loadedProductModels = loadedProductModels;
+    }
+
+    ArrayList<ProductsModel> loadedProductModels = new ArrayList<>();
 
     public ProductListPresenter(ProductListFragmentView view) {
         this.view = view;
         myApplication = (MyApplication) view.getActivity().getApplication();
         productListModel = new ProductListModel(myApplication, this);
+        gson = new Gson();
     }
 
     @Override
@@ -85,6 +98,7 @@ class ProductListPresenter implements ProductListMVP.IProductListPresenter {
             productsForCategory.addAll(productListModel.getProductsForCategory(model.getId()));
         }
 
+        setLoadedProductModels(productsForCategory);
         view.refreshProductsAdapter(productsForCategory, "All");
 
     }
@@ -116,8 +130,15 @@ class ProductListPresenter implements ProductListMVP.IProductListPresenter {
 //            view.setSelectedCategory(realm.where(CategoriesModel.class).equalTo("id", id).findFirst());
         }
 
+        setLoadedProductModels(productsModels);
         view.refreshProductsAdapter(productsModels, selectedCat.getName());
 
+    }
+
+    @Override
+    public void onProductClicked(int adapterPosition) {
+        ProductsModel productsModel = getLoadedProductModels().get(adapterPosition);
+        view.launchProductDetail(productsModel);
     }
 
 
