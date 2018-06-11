@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +15,7 @@ import com.ecom.ecomsat.R;
 import com.ecom.ecomsat.homescreen.models.CategoriesModel;
 import com.ecom.ecomsat.homescreen.models.ProductsModel;
 import com.ecom.ecomsat.homescreen.product_list.adapters.CategoryAdapter;
+import com.ecom.ecomsat.homescreen.product_list.adapters.ParentCategoryAdapter;
 import com.ecom.ecomsat.homescreen.product_list.adapters.ProductsAdapter;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -37,14 +37,14 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
     @BindView(R.id.rv_product_list)
     RecyclerView rvProductList;
     Unbinder unbinder;
-    @BindView(R.id.cv_parent_category_container)
-    CardView cvParentCategoryContainer;
-    @BindView(R.id.tv_category_name)
-    TextView tvCategoryName;
+//    @BindView(R.id.tv_category_name)
+//    TextView tvCategoryName;
     @BindView(R.id.tv_current_category)
     TextView tvCurrentCategory;
     @BindView(R.id.fab_sort)
     FloatingActionsMenu fabSort;
+    @BindView(R.id.rv_parent_category_list)
+    RecyclerView rvParentCategoryList;
     //    @BindView(R.id.action_most_viewed)
 //    FloatingActionButton actionMostViewed;
 //    @BindView(R.id.action_most_shared)
@@ -60,6 +60,7 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
     private CategoryAdapter mCategoryAdapter;
     ProductsAdapter mProductsAdapter;
     private RecyclerView.LayoutManager mCategoryLayoutManager, mProductsLayoutManager;
+    private ParentCategoryAdapter mParentCategoryAdapter;
 
     public CategoriesModel getParentCategory() {
         return parentCategory;
@@ -77,7 +78,7 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
 
         initPresenter();
         initAdapters();
-        goToParentClickListener();
+//        goToParentClickListener();
         initSortFab();
 
         productListPresenter.getProducts();
@@ -118,18 +119,24 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
 
     }
 
-    private void goToParentClickListener() {
-        cvParentCategoryContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                getParentCategory();
-                productListPresenter.resetCategories();
-//                hideGoToParentButton();
-            }
-        });
-    }
+//    private void goToParentClickListener() {
+//        cvParentCategoryContainer.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                getParentCategory();
+//                productListPresenter.resetCategories();
+////                hideGoToParentButton();
+//            }
+//        });
+//    }
 
     private void initAdapters() {
+
+        LinearLayoutManager mParentategoryLayoutManager = new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.HORIZONTAL, false);
+        rvParentCategoryList.setLayoutManager(mParentategoryLayoutManager);
+
+
         mCategoryLayoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL, false);
         rvCategoryList.setLayoutManager(mCategoryLayoutManager);
@@ -137,12 +144,27 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
         mProductsLayoutManager = new LinearLayoutManager(getActivity());
         rvProductList.setLayoutManager(mProductsLayoutManager);
 
+        mParentCategoryAdapter = new ParentCategoryAdapter(this);
+        rvParentCategoryList.setAdapter(mParentCategoryAdapter);
 
         mCategoryAdapter = new CategoryAdapter(this);
+        mProductsAdapter = new ProductsAdapter(this);
+
         rvCategoryList.setAdapter(mCategoryAdapter);
 
-        mProductsAdapter = new ProductsAdapter(this);
+//        rvParentCategoryList.post(new Runnable() {
+//            @Override
+//            public void run() {
+//            }
+//        });
+
+//        rvCategoryList.post(new Runnable() {
+//            @Override
+//            public void run() {
+//            }
+//        });
         rvProductList.setAdapter(mProductsAdapter);
+
 
     }
 
@@ -184,13 +206,13 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
 
     @Override
     public void showGoToParentButton() {
-        cvParentCategoryContainer.setVisibility(View.VISIBLE);
+//        cvParentCategoryContainer.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void setSelectedCategory(CategoriesModel selectedCategory) {
         if (selectedCategory != null) {
-            tvCategoryName.setText(selectedCategory.getName());
+//            tvCategoryName.setText(selectedCategory.getName());
         }
     }
 
@@ -202,6 +224,17 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
     @Override
     public void launchProductDetail(ProductsModel product) {
         iProductListInteractionListerner.launchProductDetail(product);
+    }
+
+    @Override
+    public void onParentCategoryClicked(CategoriesModel categoriesModel) {
+        productListPresenter.onParentCategorySelected(categoriesModel);
+    }
+
+    @Override
+    public void refreshParentCategoryAdapter(ArrayList<CategoriesModel> parentCategoryModels) {
+        mParentCategoryAdapter.refresh(parentCategoryModels);
+        rvParentCategoryList.smoothScrollToPosition(parentCategoryModels.size());
     }
 
     public void onCategoryClicked(CategoriesModel categoriesModel) {

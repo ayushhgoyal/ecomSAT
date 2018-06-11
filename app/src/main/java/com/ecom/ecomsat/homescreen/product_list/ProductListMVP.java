@@ -6,6 +6,8 @@ import com.ecom.ecomsat.homescreen.models.ProductsModel;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import io.realm.RealmResults;
+
 /**
  * Created by ayushgoyal on 08/06/18.
  */
@@ -26,6 +28,10 @@ public class ProductListMVP {
         void onProductListitemClick(int adapterPosition);
 
         void launchProductDetail(ProductsModel product);
+
+        void onParentCategoryClicked(CategoriesModel categoriesModel);
+
+        void refreshParentCategoryAdapter(ArrayList<CategoriesModel> parentCategoryModels);
     }
 
     public interface IProductListPresenter {
@@ -40,6 +46,8 @@ public class ProductListMVP {
         ArrayList<String> getRankings();
 
         void getProductsForRank(String rank);
+
+        void onParentCategorySelected(CategoriesModel categoriesModel);
     }
 
     public interface IProductListModel {
@@ -52,5 +60,9 @@ public class ProductListMVP {
         ArrayList<String> getRankings();
 
         HashSet<ProductsModel> getProductsForRank(String rank);
+
+        RealmResults<CategoriesModel> getSubCategories(Integer[] ids);
+
+        ArrayList<ProductsModel> getAllProducts();
     }
 }

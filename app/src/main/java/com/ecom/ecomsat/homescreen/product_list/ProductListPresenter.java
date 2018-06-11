@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**
@@ -23,6 +24,12 @@ class ProductListPresenter implements ProductListMVP.IProductListPresenter {
 
     Realm realm = Realm.getDefaultInstance();
     Gson gson;
+
+    public ArrayList<CategoriesModel> getParentCategoryModels() {
+        return parentCategoryModels;
+    }
+
+    private ArrayList<CategoriesModel> parentCategoryModels;
 
     public ArrayList<ProductsModel> getLoadedProductModels() {
         return loadedProductModels;
@@ -79,52 +86,74 @@ class ProductListPresenter implements ProductListMVP.IProductListPresenter {
 
         ArrayList<CategoriesModel> categoriesModels = new ArrayList<>
                 (all);
-        view.refreshCategoryAdapter(categoriesModels);
+
+        parentCategoryModels = new ArrayList<>();
+        CategoriesModel allCategoryModel = new CategoriesModel();
+        allCategoryModel.setId(-1);
+        allCategoryModel.setName("All");
+
+        RealmList<Integer> child = new RealmList<>();
+
+        for (CategoriesModel model :
+                all) {
+            child.add(model.getId());
+        }
+
+        allCategoryModel.setChild_categories(child);
+        parentCategoryModels.add(allCategoryModel);
+
+        view.refreshParentCategoryAdapter(parentCategoryModels);
+
+//        view.rvParentCategoryList.post(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
+        onParentCategorySelected(parentCategoryModels.get(0));
 
         // parent categories are displayed
         //------
 
-//        view.hideGoToParentButton();
 
         // fetch products for all parent categories
 
-        ArrayList<ProductsModel> productsForCategory = new ArrayList<>();
+        getAllProductsAndDisplay();
 
-        for (CategoriesModel model :
-                categoriesModels) {
-            productsForCategory.addAll(productListModel.getProductsForCategory(model.getId()));
-        }
+    }
+
+    private void getAllProductsAndDisplay() {
+        ArrayList<ProductsModel> productsForCategory = productListModel.getAllProducts();
 
         setLoadedProductModels(productsForCategory);
         view.refreshProductsAdapter(productsForCategory, "All");
-
     }
 
     /**
      * when cat selected, fetch subcategories and corresponding products
+     * and add to parent category
      *
      * @param
      */
     @Override
     public void onCategorySelected(CategoriesModel selectedCat) {
 
-//        List<Integer> child_categories = realm.where(CategoriesModel.class).equalTo("id", id).findFirst()
-//                .getChild_categories();
 
         int id = selectedCat.getId();
 
         ArrayList<ProductsModel> productsModels = productListModel.getProductsForCategory(id);
 
-        ArrayList<CategoriesModel> categoriesModels = productListModel.getSubCategoriesForCategory(id);
+        ArrayList<CategoriesModel> subCategoriesModels = productListModel.getSubCategoriesForCategory(id);
 
-//        ArrayList<ProductsModel> productsModels = new ArrayList<>(realm.
-//                where(CategoriesModel.class).equalTo("id", id).findFirst().getProducts());
-//        view.refreshProductsAdapter(productsModels);
 
-        if (!categoriesModels.isEmpty()) {
-            view.refreshCategoryAdapter(categoriesModels);
+        if (!subCategoriesModels.isEmpty()) {
+            if (!getParentCategoryModels().contains(selectedCat)) {
+                getParentCategoryModels().add(selectedCat);
+                view.refreshParentCategoryAdapter(getParentCategoryModels());
+            }
+
+            view.refreshCategoryAdapter(subCategoriesModels);
             view.showGoToParentButton();
-//            view.setSelectedCategory(realm.where(CategoriesModel.class).equalTo("id", id).findFirst());
         }
 
         setLoadedProductModels(productsModels);
@@ -166,6 +195,32 @@ class ProductListPresenter implements ProductListMVP.IProductListPresenter {
 
         view.refreshProductsAdapter(new ArrayList<>(rankedProducts), rank);
 
+    }
+
+    @Override
+    public void onParentCategorySelected(CategoriesModel categoriesModel) {
+
+        // remove categories till here
+
+        int index = getParentCategoryModels().indexOf(categoriesModel);
+        for (int i = getParentCategoryModels().size() - 1; i > index; i--) {
+            getParentCategoryModels().remove(i);
+        }
+        view.refreshParentCategoryAdapter(getParentCategoryModels());
+
+//        productListModel.getSubCategoriesForCategory()
+        ArrayList<Integer> child_cat_ids = new ArrayList<>(categoriesModel.getChild_categories());
+        Integer[] ids = child_cat_ids.toArray(new Integer[child_cat_ids.size()]);
+
+        RealmResults<CategoriesModel> subCategories = productListModel.getSubCategories(ids);
+        view.refreshCategoryAdapter(new ArrayList<>(subCategories));
+
+        // load products for this category
+        if (categoriesModel.getId() != -1) { // if not clicked on ALL
+            onCategorySelected(categoriesModel);
+        } else { // in case of ALL
+            getAllProductsAndDisplay();
+        }
     }
 
 

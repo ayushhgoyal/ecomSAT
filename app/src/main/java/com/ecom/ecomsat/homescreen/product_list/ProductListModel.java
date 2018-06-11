@@ -178,6 +178,17 @@ public class ProductListModel implements ProductListMVP.IProductListModel {
 
     }
 
+    @Override
+    public RealmResults<CategoriesModel> getSubCategories(Integer[] ids) {
+        RealmResults<CategoriesModel> categoriesModels = realm.where(CategoriesModel.class).in("id", ids).findAll();
+        return categoriesModels;
+    }
+
+    @Override
+    public ArrayList<ProductsModel> getAllProducts() {
+        return new ArrayList<>(realm.where(ProductsModel.class).findAll());
+    }
+
     /**
      * Fetches all products for this category and its all child categories
      *
