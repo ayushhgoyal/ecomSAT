@@ -14,13 +14,13 @@ public class ProductListMVP {
 
         void refreshCategoryAdapter(ArrayList<CategoriesModel> categoriesModels);
 
-        void refreshProductsAdapter(ArrayList<ProductsModel> productsModels);
+        void refreshProductsAdapter(ArrayList<ProductsModel> productsModels, String name);
 
-        void hideGoToParentButton();
+//        void hideGoToParentButton();
 
         void showGoToParentButton();
 
-        void setParentCategory(CategoriesModel parentCategory);
+        void setSelectedCategory(CategoriesModel parentCategory);
     }
 
     public interface IProductListPresenter {
@@ -28,7 +28,7 @@ public class ProductListMVP {
 
         void onCategoriesReceived();
 
-        void onCategorySelected(int id);
+        void onCategorySelected(CategoriesModel id);
     }
 
     public interface IProductListModel {

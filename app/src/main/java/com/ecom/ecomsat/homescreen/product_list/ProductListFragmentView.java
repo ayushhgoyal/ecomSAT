@@ -38,11 +38,19 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
     CardView cvParentCategoryContainer;
     @BindView(R.id.tv_category_name)
     TextView tvCategoryName;
+    @BindView(R.id.tv_current_category)
+    TextView tvCurrentCategory;
     private ProductListPresenter productListPresenter;
 
     private CategoryAdapter mCategoryAdapter;
     ProductsAdapter mProductsAdapter;
     private RecyclerView.LayoutManager mCategoryLayoutManager, mProductsLayoutManager;
+
+    public CategoriesModel getParentCategory() {
+        return parentCategory;
+    }
+
+    private CategoriesModel parentCategory;
 
     @Nullable
     @Override
@@ -54,10 +62,22 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
 
         initPresenter();
         initAdapters();
+        goToParentClickListener();
 
         productListPresenter.getProducts();
 
         return view;
+    }
+
+    private void goToParentClickListener() {
+        cvParentCategoryContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                getParentCategory();
+                productListPresenter.resetCategories();
+//                hideGoToParentButton();
+            }
+        });
     }
 
     private void initAdapters() {
@@ -103,14 +123,15 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
     }
 
     @Override
-    public void refreshProductsAdapter(ArrayList<ProductsModel> productsModels) {
+    public void refreshProductsAdapter(ArrayList<ProductsModel> productsModels, String name) {
+        tvCurrentCategory.setText("Displaying " + productsModels.size() + " products for: " + name);
         mProductsAdapter.refresh(productsModels);
     }
 
-    @Override
-    public void hideGoToParentButton() {
-        cvParentCategoryContainer.setVisibility(View.GONE);
-    }
+//    @Override
+//    public void hideGoToParentButton() {
+//        cvParentCategoryContainer.setVisibility(View.GONE);
+//    }
 
     @Override
     public void showGoToParentButton() {
@@ -118,13 +139,13 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
     }
 
     @Override
-    public void setParentCategory(CategoriesModel parentCategory) {
-        if (parentCategory != null) {
-            tvCategoryName.setText(parentCategory.getName());
+    public void setSelectedCategory(CategoriesModel selectedCategory) {
+        if (selectedCategory != null) {
+            tvCategoryName.setText(selectedCategory.getName());
         }
     }
 
     public void onCategoryClicked(CategoriesModel categoriesModel) {
-        productListPresenter.onCategorySelected(categoriesModel.getId());
+        productListPresenter.onCategorySelected(categoriesModel);
     }
 }
