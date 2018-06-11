@@ -4,25 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:clickable="true">
+    android:clickable="true"
+    android:padding="@dimen/margin_medium">
 
     <RelativeLayout
         android:id="@+id/container_size"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_date_added">
+        android:layout_below="@+id/tv_date_added"
+        android:layout_margin="@dimen/margin_normal">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_size"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/label_size" />
 
         <TextView
             android:id="@+id/label_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Size: " />
+            android:text="Size: "
+            android:textSize="@dimen/text_normal" />
     </RelativeLayout>
 
     <TextView
@@ -30,7 +33,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Product Name" />
+        android:text="Product Name"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_large" />
 
     <TextView
         android:id="@+id/tv_date_added"
@@ -38,25 +43,28 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_product_name"
         android:text="TextView"
+        android:textSize="@dimen/text_normal"
         tools:text="Added On" />
 
     <RelativeLayout
         android:id="@+id/container_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/container_size">
+        android:layout_below="@+id/container_size"
+        android:layout_margin="@dimen/margin_normal">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_color"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/label_color" />
 
         <TextView
             android:id="@+id/label_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Color: " />
+            android:text="Color: "
+            android:textSize="@dimen/text_normal" />
     </RelativeLayout>
 
     <TextView
@@ -64,7 +72,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/container_color"
-        android:text="Price: " />
+        android:layout_marginTop="@dimen/margin_medium"
+        android:text="Price: "
+        android:textSize="@dimen/text_normal" />
 
     <TextView
         android:id="@+id/tv_price"
@@ -72,14 +82,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/label_price"
-        android:text="1000" />
+        android:text="1000"
+        android:textSize="@dimen/text_normal" />
 
     <TextView
         android:id="@+id/label_tax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/label_price"
-        android:text="Tax: " />
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="Tax: "
+        android:textSize="@dimen/text_normal" />
 
     <TextView
         android:id="@+id/tv_tax"
@@ -87,14 +100,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/label_tax"
-        android:text="4%" />
+        android:text="4%"
+        android:textSize="@dimen/text_normal" />
 
     <TextView
         android:id="@+id/label_total_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/label_tax"
-        android:text="Total: " />
+        android:layout_marginTop="@dimen/margin_normal"
+        android:text="Total: "
+        android:textSize="@dimen/text_normal" />
 
     <TextView
         android:id="@+id/tv_total_amount"
@@ -102,6 +118,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/label_total_amount"
-        android:text="1250" />
+        android:text="1250"
+        android:textSize="@dimen/text_normal" />
 
 </RelativeLayout>

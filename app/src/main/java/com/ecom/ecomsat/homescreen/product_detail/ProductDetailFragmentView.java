@@ -3,6 +3,7 @@ package com.ecom.ecomsat.homescreen.product_detail;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,11 @@ import android.widget.TextView;
 import com.ecom.ecomsat.R;
 import com.ecom.ecomsat.homescreen.main.MainActivityView;
 import com.ecom.ecomsat.homescreen.models.ProductsModel;
+import com.ecom.ecomsat.homescreen.product_detail.adapters.ColorAdapter;
+import com.ecom.ecomsat.homescreen.product_detail.adapters.SizeAdapter;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +59,9 @@ public class ProductDetailFragmentView extends Fragment implements ProductDetail
 
     private String product_json;
     private ProductDetailPresenter productDetailPresenter;
+    private SizeAdapter sizeAdapter;
+    private ColorAdapter colorAdapter;
+    private ArrayList<Integer> sizeList;
 
     public ProductsModel getProductsModel() {
         return productsModel;
@@ -117,11 +125,50 @@ public class ProductDetailFragmentView extends Fragment implements ProductDetail
     private void setProductDetails() {
         tvProductName.setText(getProductsModel().getName());
         tvDateAdded.setText("Added on: " + getProductsModel().getDate_added());
+
+        initColorAdapter();
+        initSizeAdapter();
+    }
+
+    private void initColorAdapter() {
+
+        LinearLayoutManager mHorizontalLayoutManager = new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.HORIZONTAL, false);
+        rvColor.setLayoutManager(mHorizontalLayoutManager);
+
+
+    }
+
+    private void initSizeAdapter() {
+
+        sizeList = productDetailPresenter.getSizeList();
+
+        LinearLayoutManager mHorizontalLayoutManager = new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.HORIZONTAL, false);
+        rvSize.setLayoutManager(mHorizontalLayoutManager);
+
+        sizeAdapter = new SizeAdapter(this, sizeList);
+        rvSize.setAdapter(sizeAdapter);
+
+        // consider first item clicked
+        onSizeClicked(0);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onSizeClicked(int position) {
+        sizeAdapter.setSelected(position);
+        productDetailPresenter.onSizeSelected(position);
+    }
+
+    @Override
+    public void setColorsAdapter(ArrayList<String> colorList) {
+        colorAdapter = new ColorAdapter(this, colorList);
+        rvColor.setAdapter(colorAdapter);
     }
 }
