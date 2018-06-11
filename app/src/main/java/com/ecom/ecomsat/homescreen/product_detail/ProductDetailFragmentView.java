@@ -144,15 +144,22 @@ public class ProductDetailFragmentView extends Fragment implements ProductDetail
 
         sizeList = productDetailPresenter.getSizeList();
 
-        LinearLayoutManager mHorizontalLayoutManager = new LinearLayoutManager(getActivity(),
-                LinearLayoutManager.HORIZONTAL, false);
-        rvSize.setLayoutManager(mHorizontalLayoutManager);
+        if (!sizeList.isEmpty()) {
+            containerSize.setVisibility(View.VISIBLE);
 
-        sizeAdapter = new SizeAdapter(this, sizeList);
-        rvSize.setAdapter(sizeAdapter);
+            LinearLayoutManager mHorizontalLayoutManager = new LinearLayoutManager(getActivity(),
+                    LinearLayoutManager.HORIZONTAL, false);
+            rvSize.setLayoutManager(mHorizontalLayoutManager);
 
-        // consider first item clicked
-        onSizeClicked(0);
+            sizeAdapter = new SizeAdapter(this, sizeList);
+            rvSize.setAdapter(sizeAdapter);
+
+            // consider first item clicked
+            onSizeClicked(0);
+        } else {
+            containerSize.setVisibility(View.GONE);
+            productDetailPresenter.onSizeNotApplicable();
+        }
     }
 
     @Override

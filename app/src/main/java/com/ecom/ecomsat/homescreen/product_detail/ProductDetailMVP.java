@@ -26,6 +26,11 @@ public class ProductDetailMVP {
         void onSizeSelected(int position);
 
         void onColorSelected(int adapterPosition);
+
+        /**
+         * Fetches colors without size
+         */
+        void onSizeNotApplicable();
     }
 
     public interface IProductDetailModel {
@@ -34,6 +39,25 @@ public class ProductDetailMVP {
 
         ArrayList<String> getColorsForSize(ProductsModel product, int size);
 
+        ArrayList<String> getAllColors(ProductsModel product);
+
+        /**
+         * considers size also
+         *
+         * @param product
+         * @param selectedSize
+         * @param color
+         * @return
+         */
         VariantsModel getProductVariant(ProductsModel product, Integer selectedSize, String color);
+
+        /**
+         * doesnt consider size
+         *
+         * @param product
+         * @param color
+         * @return
+         */
+        VariantsModel getProductVariant(ProductsModel product, String color);
     }
 }

@@ -36,7 +36,14 @@ public class ProductDetailPresenter implements ProductDetailMVP.IProductDetailPr
         for (VariantsModel variant :
                 variants) {
             int size = variant.getSize();
-            list.add(size);
+
+            /**
+             * since realm treats null as 0
+             */
+            if (size != 0) {
+                list.add(size);
+            }
+
         }
         sizeList = new ArrayList<>(list);
         return sizeList;
@@ -52,6 +59,10 @@ public class ProductDetailPresenter implements ProductDetailMVP.IProductDetailPr
     public void onSizeSelected(int position) {
         selectedSize = sizeList.get(position);
 
+        getColorsForSize(selectedSize);
+    }
+
+    private void getColorsForSize(Integer selectedSize) {
         availableColorList = productDetailModel.getColorsForSize(product, selectedSize);
 
         productDetailFragmentView.setColorsAdapter(availableColorList);
@@ -68,14 +79,42 @@ public class ProductDetailPresenter implements ProductDetailMVP.IProductDetailPr
     public void onColorSelected(int adapterPosition) {
         String color = availableColorList.get(adapterPosition);
 
+        if (selectedSize == -1) { // size not applicable
+            getVariantForColorOnly(color);
+        } else { // size applicable
+            getVariantForColorAndSize(color);
+        }
+
+    }
+
+    private void getVariantForColorOnly(String color) {
+        VariantsModel variantsModel = productDetailModel.getProductVariant(product, color);
+        calculateAmounts(variantsModel);
+    }
+
+    private void getVariantForColorAndSize(String color) {
         VariantsModel productVariant = productDetailModel.getProductVariant(product, selectedSize, color);
 
+        calculateAmounts(productVariant);
+    }
+
+    private void calculateAmounts(VariantsModel productVariant) {
         int price = productVariant.getPrice();
         double tax = product.getTax().getValue();
 
         double total_amount = price + (price * (tax / 100));
 
         productDetailFragmentView.setAmounts(price, tax, total_amount);
+    }
 
+    @Override
+    public void onSizeNotApplicable() {
+
+        selectedSize = -1;
+
+        // get all colors and proceed
+
+        availableColorList = productDetailModel.getAllColors(product);
+        productDetailFragmentView.setColorsAdapter(availableColorList);
     }
 }

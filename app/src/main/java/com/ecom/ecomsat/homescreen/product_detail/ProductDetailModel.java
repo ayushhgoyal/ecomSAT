@@ -6,6 +6,7 @@ import com.ecom.ecomsat.homescreen.models.VariantsModel;
 import java.util.ArrayList;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public class ProductDetailModel implements ProductDetailMVP.IProductDetailModel {
@@ -36,9 +37,32 @@ public class ProductDetailModel implements ProductDetailMVP.IProductDetailModel 
 
     @Override
     public VariantsModel getProductVariant(ProductsModel product, Integer selectedSize, String color) {
-        VariantsModel variantsModels = product.getVariants().where().equalTo("size", selectedSize)
+        VariantsModel variantsModels = product.getVariants().where()
+                .equalTo("size", selectedSize)
                 .and()
                 .equalTo("color", color).findFirst();
         return variantsModels;
+    }
+
+    @Override
+    public VariantsModel getProductVariant(ProductsModel product, String color) {
+        VariantsModel variantsModels = product.getVariants().where()
+                .equalTo("color", color).findFirst();
+        return variantsModels;
+    }
+
+    @Override
+    public ArrayList<String> getAllColors(ProductsModel product) {
+        RealmList<VariantsModel> variants = product.getVariants();
+
+        ArrayList<String> colors = new ArrayList<>();
+
+        for (VariantsModel variantsModel :
+                variants) {
+            colors.add(variantsModel.getColor());
+        }
+
+        return colors;
+
     }
 }
