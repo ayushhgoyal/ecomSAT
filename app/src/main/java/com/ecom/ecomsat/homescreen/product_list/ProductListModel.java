@@ -63,12 +63,6 @@ public class ProductListModel implements ProductListMVP.IProductListModel {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 ResponseModel responseModel = response.body();
-//                responseModel.getCategories();
-//                realm.beginTransaction();
-//                realm.copyToRealm(responseModel.getCategories());
-//                realm.copyToRealm(responseModel.getRankings());
-//                realm.commitTransaction();
-
 
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
@@ -95,16 +89,6 @@ public class ProductListModel implements ProductListMVP.IProductListModel {
 
             }
         });
-    }
-
-    @Override
-    public void onCachedProductsReceived() {
-
-    }
-
-    @Override
-    public void onRemoteProductsReceived() {
-
     }
 
 

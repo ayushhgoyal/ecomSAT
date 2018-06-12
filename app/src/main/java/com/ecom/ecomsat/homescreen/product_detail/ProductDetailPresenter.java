@@ -25,11 +25,6 @@ public class ProductDetailPresenter implements ProductDetailMVP.IProductDetailPr
     }
 
     @Override
-    public void getProductDetails(String product_id) {
-        productDetailModel.getProduct(product_id);
-    }
-
-    @Override
     public ArrayList<Integer> getSizeList() {
         RealmList<VariantsModel> variants = product.getVariants();
         LinkedHashSet<Integer> list = new LinkedHashSet<>();

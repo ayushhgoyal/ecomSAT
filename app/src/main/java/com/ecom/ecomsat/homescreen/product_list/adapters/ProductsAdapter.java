@@ -61,9 +61,6 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
     }
 
-    private void itemClickListener() {
-
-    }
 
     @Override
     public int getItemCount() {

@@ -9,7 +9,7 @@
     </style>
 
     <style name="menu_labels_style">
-        <item name="android:background">@drawable/fab_bf</item>
+        <item name="android:background">@drawable/fab_bg</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">@dimen/text_large</item>
     </style>

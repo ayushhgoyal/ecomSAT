@@ -99,10 +99,6 @@ public class ProductDetailFragmentView extends Fragment implements ProductDetail
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            product_json = getArguments().getString(ARG_PRODUCT_JSON);
-//            setProductsModel(gson.fromJson(product_json, ProductsModel.class));
-//        }
     }
 
     @Override

@@ -157,7 +157,6 @@ class ProductListPresenter implements ProductListMVP.IProductListPresenter {
             }
 
             view.refreshCategoryAdapter(subCategoriesModels);
-            view.showGoToParentButton();
         }
 
         setLoadedProductModels(productsModels);

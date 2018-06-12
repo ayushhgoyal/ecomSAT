@@ -22,8 +22,6 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
     private ProductListFragmentView productListFragmentView;
     ArrayList<CategoriesModel> data;
 
-//    int selectedPosition = -1;
-
     public ParentCategoryAdapter(ProductListFragmentView productListFragmentView) {
         this.productListFragmentView = productListFragmentView;
         data = new ArrayList<>();
@@ -43,9 +41,6 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.tvCategoryName.setText(data.get(position).getName());
 
-//        // set selection
-//        holder.tvCategoryName.setTextColor(position == selectedPosition ? Color.BLUE : Color.BLACK);
-
         holder.cvCategoryContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +59,6 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
 
     public void refresh(ArrayList<CategoriesModel> categoriesModels) {
         data = categoriesModels;
-//        selectedPosition = 0;
         notifyDataSetChanged();
     }
 

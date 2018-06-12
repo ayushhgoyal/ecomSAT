@@ -19,8 +19,6 @@ public class ProductListMVP {
 
         void refreshProductsAdapter(ArrayList<ProductsModel> productsModels, String name);
 
-        void showGoToParentButton();
-
         void onProductListitemClick(int adapterPosition);
 
         void launchProductDetail(ProductsModel product);
@@ -53,10 +51,6 @@ public class ProductListMVP {
 
     public interface IProductListModel {
         public void fetchProductList();
-
-        public void onCachedProductsReceived();
-
-        public void onRemoteProductsReceived();
 
         ArrayList<String> getRankings();
 

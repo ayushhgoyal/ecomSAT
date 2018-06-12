@@ -19,7 +19,6 @@ public class ProductDetailMVP {
 
     public interface IProductDetailPresenter {
 
-        void getProductDetails(String product_id);
 
         ArrayList<Integer> getSizeList();
 
