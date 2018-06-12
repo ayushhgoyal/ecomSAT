@@ -36,34 +36,6 @@ public class MainActivityView extends Activity implements MainActivityMVP.IMainA
         }
     }
 
-    /**
-     * Displays loading view with general message
-     */
-    @Override
-    public void showLoadingView() {
-
-    }
-
-    @Override
-    public void hideLoadingView() {
-
-    }
-
-    /**
-     * Displays loading view with specific message
-     *
-     * @param message
-     */
-    @Override
-    public void showLoadingView(String message) {
-
-    }
-
-    @Override
-    public void showErrorMessage(String message) {
-
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

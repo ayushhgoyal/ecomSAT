@@ -69,5 +69,29 @@
         app:fab_addButtonColorNormal="@color/colorPrimary"
         app:fab_labelStyle="@style/menu_labels_style"></com.getbase.floatingactionbutton.FloatingActionsMenu>
 
+    <RelativeLayout
+        android:id="@+id/empty_loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/label_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Initializing..."
+            android:textSize="@dimen/text_normal" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label_loading"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_large" />
+
+    </RelativeLayout>
+
 
 </FrameLayout>

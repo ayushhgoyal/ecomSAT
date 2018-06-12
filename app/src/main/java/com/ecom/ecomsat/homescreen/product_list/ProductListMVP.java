@@ -19,11 +19,7 @@ public class ProductListMVP {
 
         void refreshProductsAdapter(ArrayList<ProductsModel> productsModels, String name);
 
-//        void hideGoToParentButton();
-
         void showGoToParentButton();
-
-        void setSelectedCategory(CategoriesModel parentCategory);
 
         void onProductListitemClick(int adapterPosition);
 
@@ -32,6 +28,11 @@ public class ProductListMVP {
         void onParentCategoryClicked(CategoriesModel categoriesModel);
 
         void refreshParentCategoryAdapter(ArrayList<CategoriesModel> parentCategoryModels);
+
+        void showLoadingView();
+
+        void hideLoadingView();
+
     }
 
     public interface IProductListPresenter {

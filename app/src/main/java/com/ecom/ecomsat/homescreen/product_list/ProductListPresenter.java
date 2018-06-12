@@ -50,6 +50,8 @@ class ProductListPresenter implements ProductListMVP.IProductListPresenter {
 
     @Override
     public void getProducts() {
+        view.showLoadingView();
+
         productListModel.fetchProductList();
     }
 
@@ -119,6 +121,8 @@ class ProductListPresenter implements ProductListMVP.IProductListPresenter {
         // fetch products for all parent categories
 
         getAllProductsAndDisplay();
+
+        view.hideLoadingView();
 
     }
 

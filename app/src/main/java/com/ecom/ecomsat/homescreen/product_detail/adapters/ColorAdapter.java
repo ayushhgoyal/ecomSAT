@@ -47,7 +47,7 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
         });
 
         // highlight selected item
-        holder.tvProperty.setTextColor(position == selectedPosition ? Color.RED : Color.GRAY);
+        holder.tvProperty.setTextColor(position == selectedPosition ? Color.RED : Color.BLACK);
 
     }
 

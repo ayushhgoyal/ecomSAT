@@ -44,8 +44,21 @@ public class ProductListModel implements ProductListMVP.IProductListModel {
         myApplication.getDaggerApiComponent().inject(this);
     }
 
+    /**
+     * returns DB data is exists
+     * and continues to update from server
+     */
     @Override
     public void fetchProductList() {
+
+        if (realm.where(ProductsModel.class).findFirst() != null) {
+            Log.d("ProductListModel", "Data exists");
+            productListPresenter.onCategoriesReceived();
+        } else {
+            Log.d("ProductListModel", "Data doesn't exist");
+        }
+
+
         productListCall.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ecom.ecomsat.R;
@@ -45,6 +46,8 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
     FloatingActionsMenu fabSort;
     @BindView(R.id.rv_parent_category_list)
     RecyclerView rvParentCategoryList;
+    @BindView(R.id.empty_loading_view)
+    RelativeLayout emptyLoadingView;
     //    @BindView(R.id.action_most_viewed)
 //    FloatingActionButton actionMostViewed;
 //    @BindView(R.id.action_most_shared)
@@ -93,6 +96,7 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
         FloatingActionButton actionAllButton = new FloatingActionButton(getActivity());
         actionAllButton.setTitle("Reset");
         fabSort.addButton(actionAllButton);
+
 
         actionAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,12 +212,6 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
 //        cvParentCategoryContainer.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void setSelectedCategory(CategoriesModel selectedCategory) {
-        if (selectedCategory != null) {
-//            tvCategoryName.setText(selectedCategory.getName());
-        }
-    }
 
     @Override
     public void onProductListitemClick(int adapterPosition) {
@@ -234,6 +232,16 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
     public void refreshParentCategoryAdapter(ArrayList<CategoriesModel> parentCategoryModels) {
         mParentCategoryAdapter.refresh(parentCategoryModels);
         rvParentCategoryList.smoothScrollToPosition(parentCategoryModels.size());
+    }
+
+    @Override
+    public void showLoadingView() {
+        emptyLoadingView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingView() {
+        emptyLoadingView.setVisibility(View.GONE);
     }
 
     public void onCategoryClicked(CategoriesModel categoriesModel) {
