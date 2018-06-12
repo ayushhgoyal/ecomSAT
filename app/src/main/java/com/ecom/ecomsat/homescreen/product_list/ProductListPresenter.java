@@ -166,8 +166,7 @@ class ProductListPresenter implements ProductListMVP.IProductListPresenter {
     }
 
     @Override
-    public void onProductClicked(int adapterPosition) {
-        ProductsModel productsModel = getLoadedProductModels().get(adapterPosition);
+    public void onProductClicked(ProductsModel productsModel) {
         view.launchProductDetail(productsModel);
     }
 

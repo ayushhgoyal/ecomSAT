@@ -13,9 +13,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-//        jackOptions {
-//            enabled true
-//        }
     }
     buildTypes {
         release {
@@ -40,38 +37,38 @@ ext {
     RxJava = '1.1.0'
     Retrofit = '2.0.0-beta4'
     Gson = '2.6.2'
+    Support = '25.3.1'
+    Butterknife = '8.8.1'
 }
 
 
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-//    testcompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//        exclude group: 'com.google.code.findbugs'
-//    })
-    implementation 'com.android.support:appcompat-v7:25.3.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    // Dagger 2
-//    implementation "com.google.dagger:dagger-compiler:$daggerVersion"
-    implementation 'com.android.support:support-v4:25.3.1'
-    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
+    // Dagger 2
     implementation "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     compileOnly "javax.annotation:jsr250-api:$javaxAnnotation"
+
     //Retrofit & GSON & RxJava
-    implementation "io.reactivex:rxjava:$RxJava"
-    implementation "io.reactivex:rxandroid:$RxJava"
     implementation "com.squareup.retrofit2:retrofit:$Retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$Retrofit"
     implementation "com.squareup.retrofit2:adapter-rxjava:$Retrofit"
     implementation "com.google.code.gson:gson:$Gson"
-//    testCompile 'junit:junit:4.12'
-    implementation 'com.android.support:recyclerview-v7:25.3.1'
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation 'com.android.support:cardview-v7:25.3.1'
-    implementation 'com.android.support:design:25.3.1'
+
+    //butterknife
+    implementation "com.jakewharton:butterknife:$Butterknife"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$Butterknife"
+
+    //support
+    implementation "com.android.support:cardview-v7:$Support"
+    implementation "com.android.support:design:$Support"
+    implementation "com.android.support:recyclerview-v7:$Support"
+    implementation "com.android.support:support-v4:$Support"
+    implementation "com.android.support:appcompat-v7:$Support"
+
+    // Floating Action Button
     implementation 'com.getbase:floatingactionbutton:1.10.1'
 
 

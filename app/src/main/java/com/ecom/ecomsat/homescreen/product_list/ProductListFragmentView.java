@@ -215,7 +215,7 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
 
     @Override
     public void onProductListitemClick(int adapterPosition) {
-        productListPresenter.onProductClicked(adapterPosition);
+        productListPresenter.onProductClicked(mProductsAdapter.getData().get(adapterPosition));
     }
 
     @Override

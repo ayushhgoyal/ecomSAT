@@ -42,7 +42,7 @@ public class ProductListMVP {
 
         void onCategorySelected(CategoriesModel id);
 
-        void onProductClicked(int adapterPosition);
+        void onProductClicked(ProductsModel adapterPosition);
 
         ArrayList<String> getRankings();
 
