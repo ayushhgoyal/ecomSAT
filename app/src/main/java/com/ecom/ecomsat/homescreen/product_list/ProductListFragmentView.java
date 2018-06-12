@@ -37,7 +37,7 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
     @BindView(R.id.rv_product_list)
     RecyclerView rvProductList;
     Unbinder unbinder;
-//    @BindView(R.id.tv_category_name)
+    //    @BindView(R.id.tv_category_name)
 //    TextView tvCategoryName;
     @BindView(R.id.tv_current_category)
     TextView tvCurrentCategory;
@@ -135,7 +135,6 @@ public class ProductListFragmentView extends Fragment implements ProductListMVP.
         LinearLayoutManager mParentategoryLayoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL, false);
         rvParentCategoryList.setLayoutManager(mParentategoryLayoutManager);
-
 
         mCategoryLayoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL, false);

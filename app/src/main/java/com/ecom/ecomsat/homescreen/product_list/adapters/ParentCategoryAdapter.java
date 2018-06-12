@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ecom.ecomsat.R;
@@ -33,7 +34,7 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
                                          int viewType) {
         // create a new view
         View v = (View) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.listitem_category, parent, false);
+                .inflate(R.layout.listitem_parent_category, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -52,6 +53,8 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
                 productListFragmentView.onParentCategoryClicked(data.get(position));
             }
         });
+
+        holder.divider.setVisibility(data.get(position).getId() == -1 ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -70,6 +73,8 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
         TextView tvCategoryName;
         @BindView(R.id.cv_category_container)
         CardView cvCategoryContainer;
+        @BindView(R.id.divider)
+        ImageView divider;
 
         ViewHolder(View view) {
             super(view);
